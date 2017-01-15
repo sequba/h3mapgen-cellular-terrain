@@ -1,4 +1,5 @@
 #include <vector>
+#include <random>
 #include "cellular_terrain.hpp"
 using namespace std;
 
@@ -31,3 +32,22 @@ void generation(const Board& board, Board& result, const TerrainParams& paramete
 		}
 }
 
+
+// fills the board randomly according to the probability (with respect to swhite and sblack squares)
+void random_fill(const Board& board, Board& result, const TerrainParams& parameters) {
+        unsigned int rows = board.size();
+        unsigned int cols = board[0].size();
+        board_set_size(result, rows, cols);
+        
+	default_random_engine gen;
+        bernoulli_distribution dist(parameters.probability);
+
+	for(unsigned int i=0 ; i < rows ; i++)
+                for(unsigned int j=0 ; j < cols ; j++)
+			if(board[i][j] == sblack || board[i][j] == swhite)
+				result[i][j] = board[i][j];
+			else if(dist(gen))
+				result[i][j] = white;
+			else
+				result[i][j] = black;
+}

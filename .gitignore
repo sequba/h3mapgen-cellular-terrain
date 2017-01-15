@@ -1,5 +1,6 @@
 generate
 draw
+random
 
 # Compiled Object files
 *.slo

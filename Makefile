@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -pedantic -Wall -Wextra -Wformat -Wfloat-equal -W -Wreturn-type -pedantic-errors -Wundef
 LDLIBS =
-TARGETS = generate draw
+TARGETS = generate draw random
  
 all: $(TARGETS)
 
@@ -10,6 +10,9 @@ generate: Makefile board.o cellular_terrain.o
 
 draw: Makefile board.o
 	 $(CXX) $(CXXFLAGS) -o draw board.o draw.cpp
+
+random: Makefile board.o cellular_terrain.o
+	$(CXX) $(CXXFLAGS) -o random board.o cellular_terrain.o random.cpp
 
 clean:
 	rm -f *.o
