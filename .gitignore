@@ -1,6 +1,7 @@
 generate
 draw
 random
+facade_test
 maps/*
 
 # Compiled Object files

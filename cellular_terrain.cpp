@@ -51,3 +51,56 @@ void random_fill(const Board& board, Board& result, const TerrainParams& paramet
 			else
 				result[i][j] = black;
 }
+
+TerrainParams moore_neighbourhood(float probability, int treshold, int self_weight) {
+        TerrainParams res;
+        res.probability = probability;
+        res.treshold = treshold;
+
+        // Moore's neighbourhood:
+        // 1 1 1
+        // 1 s 1
+        // 1 1 1
+        for(unsigned int i=0 ; i < neighbourhood_size ; i++)
+                for(unsigned int j=0 ; j < neighbourhood_size ; j++)
+                        if(i == neighbourhood_radius && j == neighbourhood_radius)
+                                res.neighbourhood[i][j] = self_weight;
+                        else if(abs(i-neighbourhood_radius) < 2 && abs(j-neighbourhood_radius) < 2)
+                                res.neighbourhood[i][j] = 1;
+                        else
+                                res.neighbourhood[i][j] = 0;
+	return res;
+}
+
+TerrainParams neumann_neighbourhood(float probability, int treshold, int self_weight) {
+        TerrainParams res;
+        res.probability = probability;
+        res.treshold = treshold;
+
+        // von Neumann's neighbourhood:
+        // 0 1 0
+        // 1 s 1
+        // 0 1 0
+        for(unsigned int i=0 ; i < neighbourhood_size ; i++)
+                for(unsigned int j=0 ; j < neighbourhood_size ; j++)
+                        if(i == neighbourhood_radius && j == neighbourhood_radius)
+                                res.neighbourhood[i][j] = self_weight;
+                        else if(abs(i-neighbourhood_radius) + abs(j-neighbourhood_radius) < 2)
+                                res.neighbourhood[i][j] = 1;
+                        else
+                                res.neighbourhood[i][j] = 0;
+	return res;
+}
+
+void terrain(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations) {
+	random_fill(board, result, parameters);
+	
+	Board tmp_board;
+	Board* b1 = &tmp_board;
+	Board* b2 = &result;
+
+	for(unsigned int i=0 ; i < iterations ; i++) {
+		swap(b1,b2);
+		generation(*b1, *b2, parameters);
+	}
+}

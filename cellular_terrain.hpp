@@ -22,4 +22,14 @@ struct TerrainParams {
 void generation(const Board& board, Board& result, const TerrainParams& parameters);
 void random_fill(const Board& board, Board& result, const TerrainParams& parameters);
 
+
+// Facade for convinient use with typical sets of parameters:
+TerrainParams moore_neighbourhood(float probability, int treshold, int self_weight=1);
+TerrainParams neumann_neighbourhood(float probability, int treshold, int self_weight=1);
+void terrain(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations);
+
+// Example usage:
+// terrain(my_map, terrain_map, moore_neighbourhood(0.5, 3), 2);
+// terrain(my_map, terrain_map, neumann_neighbourhood(0.4, 4, 3), 4);
+
 #endif
