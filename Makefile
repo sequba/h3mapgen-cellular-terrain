@@ -5,11 +5,11 @@ TARGETS = generate draw
  
 all: $(TARGETS)
 
-generate: Makefile cellular_terrain.o
-	 $(CXX) $(CXXFLAGS) -o generate cellular_terrain.o generate.cpp
+generate: Makefile board.o cellular_terrain.o
+	 $(CXX) $(CXXFLAGS) -o generate board.o cellular_terrain.o generate.cpp
 
-draw: Makefile cellular_terrain.o
-	 $(CXX) $(CXXFLAGS) -o draw draw.cpp
+draw: Makefile board.o
+	 $(CXX) $(CXXFLAGS) -o draw board.o draw.cpp
 
 clean:
 	rm -f *.o

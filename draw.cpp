@@ -6,7 +6,10 @@
 // or the GNU Public License, whichever you prefer:
 // November 23, 2004
 
-#include "cellular.hpp"
+#include <iostream>
+#include <string>
+#include "board.hpp"
+using namespace std;
 
 struct Color {
 	Color(unsigned short int red, unsigned short int green, unsigned short int blue)
@@ -14,7 +17,7 @@ struct Color {
 	unsigned short int r, g, b;
 };
 
-Color state2color(SquareState s) {
+Color square2color(Square s) {
 	if(s == white)
 		return Color(255,255,255);
 	else if(s == swhite)
@@ -29,7 +32,7 @@ Color state2color(SquareState s) {
 
 const unsigned short int zoom = 4;
 
-void drawbmp (const Array& board, const string filename) {
+void drawbmp (const Board& board, const string filename) {
 	unsigned int headers[13];
 	int extrabytes;
 	int paddedsize;
@@ -88,7 +91,7 @@ void drawbmp (const Array& board, const string filename) {
 	for(int y = height - 1; y >= 0; y--) {     // BMP image format is written from bottom to top...
    		for(unsigned int x = 0; x <= width - 1; x++) {
 
-			Color c = state2color(board[y/zoom][x/zoom]);
+			Color c = square2color(board[y/zoom][x/zoom]);
 
       			// Also, it's written in (b,g,r) format...
       			fprintf(outfile, "%c", c.b);
@@ -103,11 +106,14 @@ void drawbmp (const Array& board, const string filename) {
 }
 
 int main(int argc, char** argv) {
-	if(argc < 2)
+	if(argc < 2) {
 		cerr << "Usage: " << argv[0] << " output_filename.bmp\n";
+		return 0;
+	}
+
 	string filename = argv[1];
-	Array board;
-	load_array(board);
+	Board board;
+	load_board(board);
 	drawbmp(board, filename);
 	return 0;
 }
