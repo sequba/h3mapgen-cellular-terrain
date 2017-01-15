@@ -1,6 +1,7 @@
 generate
 draw
 random
+maps/*
 
 # Compiled Object files
 *.slo
