@@ -8,7 +8,6 @@ Part of the Heroes 3 Map Generator. Module builds terrain shape using cellular a
 
 The game map (board) is represented as a 2-d vector of squares.
 Namely: ` typedef vector<vector<Square> > Board; `
-
 A single square can be in one of 4 states: white, black, swhite or sblack:
 ```
 enum Square {
@@ -26,7 +25,8 @@ enum Square {
 
 ### How to use the generator?
 
-Take a look on facade function `terrain(...)` as well as specialized neighbourhood functions:
+First of all, you need to include the header: `#include "cellular_terrain.hpp"`.
+Then take a look on facade function `terrain(...)` as well as specialized neighbourhood functions:
 ```
 void terrain(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations);
 ```
