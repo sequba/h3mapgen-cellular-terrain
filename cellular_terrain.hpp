@@ -11,11 +11,11 @@ const unsigned int neighbourhood_size = 2*neighbourhood_radius + 1;
 struct TerrainParams {
         // neighbourhood contains weights for squares' neighbourhood
         // initially board is filled randomly according to the probability of empty square
-	// treshold defines the minimum value for the weighted sum (over the nighbourhood)
+	// threshold defines the minimum value for the weighted sum (over the nighbourhood)
         // for a square to survive or be born
         int neighbourhood[neighbourhood_size][neighbourhood_size];
         float probability; //of empty square
-	int treshold;
+	int threshold;
 };
 
 // Real stuff:
@@ -24,8 +24,8 @@ void random_fill(const Board& board, Board& result, const TerrainParams& paramet
 
 
 // Facade for convinient use with typical sets of parameters:
-TerrainParams moore_neighbourhood(float probability, int treshold, int self_weight=1);
-TerrainParams neumann_neighbourhood(float probability, int treshold, int self_weight=1);
+TerrainParams moore_neighbourhood(float probability, int threshold, int self_weight=1);
+TerrainParams neumann_neighbourhood(float probability, int threshold, int self_weight=1);
 void terrain(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations);
 
 // Example usage:

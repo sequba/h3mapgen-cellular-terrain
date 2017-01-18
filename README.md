@@ -40,10 +40,10 @@ void terrain(const Board& board, Board& result, const TerrainParams& parameters,
 
 
 ```
-TerrainParams *_neighbourhood(float probability, int treshold, int self_weight=1);
+TerrainParams *_neighbourhood(float probability, int threshold, int self_weight=1);
 ```
 - probability is a probability of empty square on the initial board before running CA
-- treshold defines the minimum value for the weighted sum (over the nighbourhood) for a square to survive or be born
+- threshold defines the minimum value for the weighted sum (over the nighbourhood) for a square to survive or be born
 - self_weight specifies the degree of contribution of the current square's state to the wighted sum
 
 

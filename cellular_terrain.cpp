@@ -24,7 +24,7 @@ void generation(const Board& board, Board& result, const TerrainParams& paramete
 				for (unsigned int i=0 ; i < neighbourhood_size ; i++)
 					for(unsigned int j = 0 ; j < neighbourhood_size ; j++)
 						sum += parameters.neighbourhood[i][j] * square2int(board[ii+i][jj+j]);
-				if(sum >= parameters.treshold)
+				if(sum >= parameters.threshold)
 					result[i][j] = black;
 				else
 					result[i][j] = white;
@@ -52,10 +52,10 @@ void random_fill(const Board& board, Board& result, const TerrainParams& paramet
 				result[i][j] = black;
 }
 
-TerrainParams moore_neighbourhood(float probability, int treshold, int self_weight) {
+TerrainParams moore_neighbourhood(float probability, int threshold, int self_weight) {
         TerrainParams res;
         res.probability = probability;
-        res.treshold = treshold;
+        res.threshold = threshold;
 
         // Moore's neighbourhood:
         // 1 1 1
@@ -72,10 +72,10 @@ TerrainParams moore_neighbourhood(float probability, int treshold, int self_weig
 	return res;
 }
 
-TerrainParams neumann_neighbourhood(float probability, int treshold, int self_weight) {
+TerrainParams neumann_neighbourhood(float probability, int threshold, int self_weight) {
         TerrainParams res;
         res.probability = probability;
-        res.treshold = treshold;
+        res.threshold = threshold;
 
         // von Neumann's neighbourhood:
         // 0 1 0
