@@ -62,8 +62,8 @@ A quick glance at the code in `facade_test.cpp` whould leave no doubts, I belive
 ### Which files exactly do you need?
 
 Just four of them:
-`board.hpp`, `board.cpp` - general board representation related stuff
-`cellular_terrain.hpp`, `cellular_terrain.cpp` - CA mechanics
+- `board.hpp` and `board.cpp` for general board representation related stuff
+- `cellular_terrain.hpp` and `cellular_terrain.cpp` for CA mechanics
 
 
 
