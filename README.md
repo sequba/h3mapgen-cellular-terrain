@@ -54,7 +54,7 @@ Example usage:
 terrain(my_map, terrain_map, moore_neighbourhood(0.5, 3), 2);
 terrain(my_map, terrain_map, neumann_neighbourhood(0.4, 4, 3), 4);
 ```
-A quick glance at the code in `facade_test.cpp` whould leave no doubts, I belive.
+A quick glance at the code in `facade_test.cpp` would leave no doubts, I belive.
 
 
 
@@ -65,7 +65,7 @@ Just four of them:
 - `board.hpp` and `board.cpp` for general board representation related stuff
 - `cellular_terrain.hpp` and `cellular_terrain.cpp` for CA mechanics
 
-As a bonus, you may also want to use my `ascii -> bmp` conversion for resulting maps. Then I'll need `draw.cpp` in addition.
+As a bonus, you may also want to use my `ascii -> bmp` conversion for resulting maps. Then you'll need `draw.cpp` in addition.
 
 
 
