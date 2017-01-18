@@ -65,6 +65,8 @@ Just four of them:
 - `board.hpp` and `board.cpp` for general board representation related stuff
 - `cellular_terrain.hpp` and `cellular_terrain.cpp` for CA mechanics
 
+As a bonus, you may also want to use my `ascii -> bmp` conversion for resulting maps. Then I'll need `draw.cpp` in addition.
+
 
 
 
