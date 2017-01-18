@@ -2,6 +2,8 @@
 #include "cellular_terrain.hpp"
 using namespace std;
 
+// Program generates a sample input od superwhite and superblack with random filling
+
 const int zone_size = 16;
 const int margin = zone_size/2;
 

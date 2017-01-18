@@ -1,3 +1,5 @@
+# Script runs CA for a number of parameters and presents the results on a big png image
+
 for p in `seq 1 9`
 do
 	for t in `seq 1 9`

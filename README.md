@@ -31,10 +31,10 @@ Then take a look on facade function `terrain(...)` as well as specialized neighb
 ```
 void terrain(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations);
 ```
-- board is an input; meant to contain some swhite and sblack squares
-- result will hold the resulting terrain map
-- parameters structure may be easly obtained from functions such as `moore_neighbourhood(...)` etc.
-- iterations just specifies the number of succesive CA generations
+- `board` is an input; meant to contain some swhite and sblack squares
+- `result` will hold the resulting terrain map
+- `parameters` structure may be easly obtained from functions such as `moore_neighbourhood(...)` etc.
+- `iterations` just specifies the number of succesive CA generations
 
 
 
@@ -42,9 +42,9 @@ void terrain(const Board& board, Board& result, const TerrainParams& parameters,
 ```
 TerrainParams *_neighbourhood(float probability, int threshold, int self_weight=1);
 ```
-- probability is a probability of empty square on the initial board before running CA
-- threshold defines the minimum value for the weighted sum (over the nighbourhood) for a square to survive or be born
-- self_weight specifies the degree of contribution of the current square's state to the wighted sum
+- `probability` is a probability of empty square on the initial board before running CA
+- `threshold` defines the minimum value for the weighted sum (over the nighbourhood) for a square to survive or be born
+- `self_weight` specifies the degree of contribution of the current square's state to the wighted sum
 
 
 
@@ -54,10 +54,16 @@ Example usage:
 terrain(my_map, terrain_map, moore_neighbourhood(0.5, 3), 2);
 terrain(my_map, terrain_map, neumann_neighbourhood(0.4, 4, 3), 4);
 ```
+A quick glance at the code in `facade_test.cpp` whould leave no doubts, I belive.
 
 
 
 
+### Which files exactly do you need?
+
+Just four of them:
+`board.hpp`, `board.cpp` - general board representation related stuff
+`cellular_terrain.hpp`, `cellular_terrain.cpp` - CA mechanics
 
 
 

@@ -1,8 +1,8 @@
-// convinient executable for testing and prototyping puropses
-
 #include <iostream>
 #include "cellular_terrain.hpp"
 using namespace std;
+
+// Program reads map and runs one generation of CA
 
 int main(int argc, char** argv) {
         if(argc < 2) {

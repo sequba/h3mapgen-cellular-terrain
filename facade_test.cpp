@@ -2,6 +2,8 @@
 #include "cellular_terrain.hpp"
 using namespace std;
 
+// Simple demonstration how to use the main function.
+
 const int zone_size = 16;
 const int margin = zone_size/2;
 

@@ -1,15 +1,10 @@
-// function drawbmp based on:
-// Nebulabrot / Buddhabrot generator.
-// Brought to you by Wikipedia...
-// Written by User:Evercat
-// Released under the GNU Free Documentation License
-// or the GNU Public License, whichever you prefer:
-// November 23, 2004
-
 #include <iostream>
 #include <string>
 #include "board.hpp"
 using namespace std;
+
+// The program converts ascii map to bmp file
+// Zoom factor could be specified below.
 
 struct Color {
 	Color(unsigned short int red, unsigned short int green, unsigned short int blue)
@@ -31,6 +26,14 @@ Color square2color(Square s) {
 }
 
 const unsigned short int zoom = 4;
+
+// function drawbmp based on:
+// Nebulabrot / Buddhabrot generator.
+// Brought to you by Wikipedia...
+// Written by User:Evercat
+// Released under the GNU Free Documentation License
+// or the GNU Public License, whichever you prefer:
+// November 23, 2004
 
 void drawbmp (const Board& board, const string filename) {
 	unsigned int headers[13];
