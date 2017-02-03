@@ -5,22 +5,24 @@ using namespace std;
 // Program reads map and runs one generation of CA
 
 int main(int argc, char** argv) {
-        if(argc < 2) {
-                cerr << "Usage: " << argv[0] << " threshold\n";
+        if(argc < 3) {
+                cerr << "Usage: " << argv[0] << " threshold self_weight\n";
 		return 0;
 	}
 		
 	int threshold = atoi(argv[1]);
-        int neighbourhood[5][5] = {5, 0, 0, 0, 5,
-                                   0, 0, 2, 0, 0,
-                                   0, 2, 2, 2, 0,
-                                   0, 0, 2, 0, 0,
-                                   5, 0, 0, 0, 5
-        };
-        TerrainParams params;
-        params.threshold = threshold;
-        copy(&neighbourhood[0][0], &neighbourhood[0][0]+25, &(params.neighbourhood[0][0]));
-        Board board1, board2;
+	int self_weight = atoi(argv[2]);
+        
+        TerrainParams params = moore_neighbourhood(0.5, threshold+self_weight, self_weight);
+        /*
+	for(int i=0 ; i < neighbourhood_size ; i++) {
+		for(int j=0 ; j < neighbourhood_size ; j++) {
+			cerr << params.neighbourhood[i][j] << ' ';
+		}
+		cerr << '\n';
+	}
+	*/
+	Board board1, board2;
         load_board(board1);
         generation(board1, board2, params);
         print_board(board2);

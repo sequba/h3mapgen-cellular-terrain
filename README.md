@@ -73,4 +73,4 @@ As a bonus, you may also want to use my `ascii -> bmp` conversion for resulting 
 
 ### Note
 
-Note: Bash script produce.sh requires imagemagick.
+Bash script produce.sh requires imagemagick.
