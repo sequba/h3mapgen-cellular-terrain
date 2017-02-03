@@ -33,8 +33,8 @@ int main() {
 	
 	Board board, board2;
 	generate_sample(board, rows, cols);
-	//terrain(board, board2, neumann_neighbourhood(0.4, 4, 3), 4);
-	terrain(board, board2, moore_neighbourhood(0.5, 3), 2);
+	//terrain(board, board2, neumann_neighbourhood(0.4, 5, 3), 5);
+	terrain(board, board2, moore_neighbourhood(0.5, 5), 2);
 	print_board(board2);
 
 	return 0;

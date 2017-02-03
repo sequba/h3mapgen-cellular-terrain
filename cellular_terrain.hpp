@@ -19,7 +19,7 @@ struct TerrainParams {
 };
 
 // Real stuff:
-void generation(const Board& board, Board& result, const TerrainParams& parameters);
+void generation(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations=1);
 void random_fill(const Board& board, Board& result, const TerrainParams& parameters);
 
 
@@ -31,5 +31,8 @@ void terrain(const Board& board, Board& result, const TerrainParams& parameters,
 // Example usage:
 // terrain(my_map, terrain_map, moore_neighbourhood(0.5, 3), 2);
 // terrain(my_map, terrain_map, neumann_neighbourhood(0.4, 4, 3), 4);
+
+// more_white flag is kind of heuristical; try both values on your own to find out what works best for your purposes
+void autoset_threshold(TerrainParams& params, const Board& randomfilled_board, bool more_white=false);
 
 #endif

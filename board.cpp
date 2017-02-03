@@ -28,3 +28,24 @@ void load_board(Board& board) {
                         board[i][j] = char2square(line[j]);
         }
 }
+
+// count black and superblack squares
+unsigned int count_black_squares(const Board& board) {
+	int rows = board.size();
+        int cols = board[0].size();
+       
+	int black=0;
+
+	for(int i=0 ; i < rows ; i++)
+                for(int j=0 ; j < cols ; j++)
+  			black += square2int(board[i][j]);
+
+	return black;
+}
+
+float black_rate(const Board& board) {
+	int rows = board.size();
+	int cols = board[0].size();
+
+	return count_black_squares(board)/(rows*cols);
+}

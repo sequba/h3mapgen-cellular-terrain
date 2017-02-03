@@ -4,7 +4,7 @@
 using namespace std;
 
 // computes one generation of CA according to parameters given
-void generation(const Board& board, Board& result, const TerrainParams& parameters) {
+void gen(const Board& board, Board& result, const TerrainParams& parameters) {
 	// resulting board will be surrounded by 2-thick sblack boarders in order to get away with edge cases smoothly
 	unsigned int rows = board.size();
 	unsigned int cols = board[0].size();
@@ -32,6 +32,19 @@ void generation(const Board& board, Board& result, const TerrainParams& paramete
 		}
 }
 
+void generation(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations) {
+	Board tmp_board = board;
+	Board* b2 = &tmp_board;
+	Board* b1 = &result;
+
+	for(unsigned int i=0 ; i < iterations ; i++) {
+		swap(b1,b2);
+		gen(*b1, *b2, parameters);
+	}
+
+	if(b2 != &result)
+		result = *b2;
+}
 
 // fills the board randomly according to the probability (with respect to swhite and sblack squares)
 void random_fill(const Board& board, Board& result, const TerrainParams& parameters) {
@@ -93,14 +106,29 @@ TerrainParams neumann_neighbourhood(float probability, int threshold, int self_w
 }
 
 void terrain(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations) {
-	random_fill(board, result, parameters);
-	
 	Board tmp_board;
-	Board* b1 = &tmp_board;
-	Board* b2 = &result;
+	random_fill(board, tmp_board, parameters);
+	generation(tmp_board, result, parameters, iterations);	
+}
 
-	for(unsigned int i=0 ; i < iterations ; i++) {
-		swap(b1,b2);
-		generation(*b1, *b2, parameters);
+const unsigned int auto_thresholding_limit = 1024;
+const unsigned int auto_thresholding_iterations = 2;
+const float auto_thresholding_rate = 0.5;
+
+// Function test various thresholds.
+// For each value, the black/white rate is computed after auto_thresholding_iterations.
+// One that gives the rate closest to auto_thresholding_rate is to be picked as the best one.
+void autoset_threshold(TerrainParams& params, const Board& randomfilled_board, bool more_white) {
+	Board result;
+
+	for(unsigned int i=0 ; i < auto_thresholding_limit ; i++) {
+		params.threshold = i;
+		generation(randomfilled_board, result, params, auto_thresholding_iterations);
+
+		if(black_rate(result) > auto_thresholding_rate)
+			break;
 	}
+
+	if(!more_white)
+		params.threshold--;
 }

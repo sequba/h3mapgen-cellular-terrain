@@ -21,6 +21,9 @@ typedef vector<vector<Square> > Board;
 void print_board(const Board& board);
 void load_board(Board& board);
 
+// Statistical measures
+float black_rate(const Board& board);
+
 // Auxiliary conversions etc:
 inline int square2int(Square s) {
         return (s == black || s == sblack);
