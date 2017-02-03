@@ -65,7 +65,7 @@ TerrainParams moore_neighbourhood(float probability, int threshold, int self_wei
                 for(unsigned int j=0 ; j < neighbourhood_size ; j++)
                         if(i == neighbourhood_radius && j == neighbourhood_radius)
                                 res.neighbourhood[i][j] = self_weight;
-                        else if(abs(i-neighbourhood_radius) < 2 && abs(j-neighbourhood_radius) < 2)
+                        else if(abs((int)i-(int)neighbourhood_radius) < 2 && abs((int)j-(int)neighbourhood_radius) < 2)
                                 res.neighbourhood[i][j] = 1;
                         else
                                 res.neighbourhood[i][j] = 0;
@@ -85,7 +85,7 @@ TerrainParams neumann_neighbourhood(float probability, int threshold, int self_w
                 for(unsigned int j=0 ; j < neighbourhood_size ; j++)
                         if(i == neighbourhood_radius && j == neighbourhood_radius)
                                 res.neighbourhood[i][j] = self_weight;
-                        else if(abs(i-neighbourhood_radius) + abs(j-neighbourhood_radius) < 2)
+                        else if(abs((int)i-(int)neighbourhood_radius) + abs((int)j-(int)neighbourhood_radius) < 2)
                                 res.neighbourhood[i][j] = 1;
                         else
                                 res.neighbourhood[i][j] = 0;
