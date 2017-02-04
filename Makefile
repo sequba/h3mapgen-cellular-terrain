@@ -1,7 +1,7 @@
 CXX = g++
 CXXFLAGS = -std=c++11 -pedantic -Wall -Wextra -Wformat -Wfloat-equal -W -Wreturn-type -pedantic-errors -Wundef
 LDLIBS =
-TARGETS = generate draw random randomize facade_test
+TARGETS = generate draw random randomize pick_threshold facade_test
  
 all: $(TARGETS)
 
@@ -19,6 +19,9 @@ facade_test: Makefile board.o cellular_terrain.o facade_test.cpp
 
 randomize: Makefile board.o cellular_terrain.o randomize.cpp
 	$(CXX) $(CXXFLAGS) -o randomize board.o cellular_terrain.o randomize.cpp
+
+pick_threshold: Makefile board.o cellular_terrain.o pick_threshold.cpp
+	$(CXX) $(CXXFLAGS) -o pick_threshold board.o cellular_terrain.o pick_threshold.cpp
 
 clean:
 	rm -f *.o

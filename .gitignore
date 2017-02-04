@@ -2,6 +2,7 @@ generate
 draw
 random
 randomize
+pick_threshold
 facade_test
 maps/*
 

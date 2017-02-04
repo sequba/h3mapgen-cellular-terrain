@@ -125,7 +125,7 @@ void autoset_threshold(TerrainParams& params, const Board& randomfilled_board, b
 		params.threshold = i;
 		generation(randomfilled_board, result, params, auto_thresholding_iterations);
 
-		if(black_rate(result) > auto_thresholding_rate)
+		if(black_rate(result) < auto_thresholding_rate)
 			break;
 	}
 

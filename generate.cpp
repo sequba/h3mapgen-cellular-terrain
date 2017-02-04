@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
 	int threshold = atoi(argv[1]);
 	int self_weight = atoi(argv[2]);
         
-        TerrainParams params = moore_neighbourhood(0.5, threshold+self_weight, self_weight);
+        TerrainParams params = moore_neighbourhood(0.5, threshold, self_weight);
         /*
 	for(int i=0 ; i < neighbourhood_size ; i++) {
 		for(int j=0 ; j < neighbourhood_size ; j++) {
