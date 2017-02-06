@@ -60,9 +60,9 @@ void random_fill(const Board& board, Board& result, const TerrainParams& paramet
 			if(board[i][j] == sblack || board[i][j] == swhite)
 				result[i][j] = board[i][j];
 			else if(dist(gen))
-				result[i][j] = white;
-			else
 				result[i][j] = black;
+			else
+				result[i][j] = white;
 }
 
 TerrainParams moore_neighbourhood(float probability, int threshold, int self_weight) {
