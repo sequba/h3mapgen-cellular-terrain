@@ -6,11 +6,11 @@ Part of the Heroes 3 Map Generator. Module builds terrain shape using cellular a
 
 ### Data representation description:
 
-The game map (board) is represented as a 2-d vector of squares. Namely: ` typedef vector<vector<Square> > Board; `
+The game map (board) is represented as a 2-d vector of cells. Namely: ` typedef vector<vector<Cell> > Board; `
 
-A single square can be in one of 4 states: white, black, swhite or sblack:
+A single cell can be in one of 4 states: white, black, swhite or sblack:
 ```
-enum Square {
+enum Cell {
         white,	black,
         swhite,	sblack
 };
@@ -31,7 +31,7 @@ Then take a look on facade function `terrain(...)` as well as specialized neighb
 ```
 void terrain(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations);
 ```
-- `board` is an input; meant to contain some swhite and sblack squares
+- `board` is an input; meant to contain some swhite and sblack cells
 - `result` will hold the resulting terrain map
 - `parameters` structure may be easly obtained from functions such as `moore_neighbourhood(...)` etc.
 - `iterations` just specifies the number of succesive CA generations
@@ -42,9 +42,9 @@ void terrain(const Board& board, Board& result, const TerrainParams& parameters,
 ```
 TerrainParams *_neighbourhood(float probability, int threshold, int self_weight=1);
 ```
-- `probability` is a probability of empty square on the initial board before running CA
-- `threshold` defines the minimum value for the weighted sum (over the nighbourhood) for a square to survive or be born
-- `self_weight` specifies the degree of contribution of the current square's state to the wighted sum
+- `probability` is a probability of empty cell on the initial board before running CA
+- `threshold` defines the minimum value for the weighted sum (over the nighbourhood) for a cell to survive or be born
+- `self_weight` specifies the degree of contribution of the current cell's state to the wighted sum
 
 
 

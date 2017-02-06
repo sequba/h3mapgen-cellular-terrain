@@ -11,7 +11,7 @@ void print_board(const Board& board) {
         cout << rows << ' ' << cols << '\n';
         for(int i=0 ; i < rows ; i++) {
                 for(int j=0 ; j < cols ; j++)
-                        cout << square2char(board[i][j]);
+                        cout << cell2char(board[i][j]);
                 cout << '\n';
         }
 }
@@ -25,12 +25,12 @@ void load_board(Board& board) {
         for(int i=0 ; i < rows ; i++) {
                 getline(cin, line);
                 for(int j=0 ; j < cols ; j++)
-                        board[i][j] = char2square(line[j]);
+                        board[i][j] = char2cell(line[j]);
         }
 }
 
-// count squares of specyfic colour
-unsigned int count_squares(const Board& board, Square colour) {
+// count cells of specyfic colour
+unsigned int count_cells(const Board& board, Cell colour) {
 	int rows = board.size();
         int cols = board[0].size();
        
@@ -45,8 +45,8 @@ unsigned int count_squares(const Board& board, Square colour) {
 }
 
 float black_rate(const Board& board) {
-	int nblack = count_squares(board, black);
-	int nwhite = count_squares(board, white);
+	int nblack = count_cells(board, black);
+	int nwhite = count_cells(board, white);
 	int sum = nblack+nwhite;
 
 	return (float)nblack/(float)sum;

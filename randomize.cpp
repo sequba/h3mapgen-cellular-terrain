@@ -2,11 +2,11 @@
 #include "cellular_terrain.hpp"
 using namespace std;
 
-// Reads input and puts white/black squares randomly with respect to super* ones
+// Reads input and puts white/black cells randomly with respect to super* ones
 
 int main(int argc, char** argv) {
 	if(argc < 2) {
-		cout << "Usage: " << argv[0] << "p - the probability of empty square"
+		cout << "Usage: " << argv[0] << "p - the probability of empty cell"
 		     << "\n";
 		return 0;
 	}

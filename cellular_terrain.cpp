@@ -14,7 +14,7 @@ void gen(const Board& board, Board& result, const TerrainParams& parameters) {
 			// near edge -> sblack boarder
 			if(i < neighbourhood_radius || i >= rows - neighbourhood_radius || j < neighbourhood_radius || j >= cols - neighbourhood_radius )
 				result[i][j] = sblack;
-			// swhite and sblack squares don't change
+			// swhite and sblack cells don't change
 			else if(board[i][j] == swhite || board[i][j] == sblack) {
 				result[i][j] = board[i][j];
 			} else {
@@ -23,7 +23,7 @@ void gen(const Board& board, Board& result, const TerrainParams& parameters) {
 				int sum = 0;
 				for (unsigned int i=0 ; i < neighbourhood_size ; i++)
 					for(unsigned int j = 0 ; j < neighbourhood_size ; j++)
-						sum += parameters.neighbourhood[i][j] * square2int(board[ii+i][jj+j]);
+						sum += parameters.neighbourhood[i][j] * cell2int(board[ii+i][jj+j]);
 				if(sum >= parameters.threshold)
 					result[i][j] = black;
 				else
@@ -46,7 +46,7 @@ void generation(const Board& board, Board& result, const TerrainParams& paramete
 		result = *b2;
 }
 
-// fills the board randomly according to the probability (with respect to swhite and sblack squares)
+// fills the board randomly according to the probability (with respect to swhite and sblack cells)
 void random_fill(const Board& board, Board& result, const TerrainParams& parameters) {
         unsigned int rows = board.size();
         unsigned int cols = board[0].size();

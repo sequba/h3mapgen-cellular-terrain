@@ -1,4 +1,4 @@
-# This script is intended to test CA on sample input file (with some superwhite and superblack square)
+# This script is intended to test CA on sample input file (with some superwhite and superblack cell)
 
 ./randomize 0.6 < input_file > /tmp/dupa
 for i in `seq 1 4` 

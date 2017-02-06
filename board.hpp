@@ -5,17 +5,17 @@
 #include<cassert>
 using namespace std;
 
-// Representation of single square's state
-enum Square {
-        // swhite and sblack squares are not going to change their square
+// Representation of single cell's state
+enum Cell {
+        // swhite and sblack cells are not going to change their cell
         white = ' ',
         black = '#',
         swhite = '.',
         sblack = '$'
 };
 
-// Board is a 2-d array of squares
-typedef vector<vector<Square> > Board;
+// Board is a 2-d array of cells
+typedef vector<vector<Cell> > Board;
 
 // Functions for I/O
 void print_board(const Board& board);
@@ -25,14 +25,14 @@ void load_board(Board& board);
 float black_rate(const Board& board);
 
 // Auxiliary conversions etc:
-inline int square2int(Square s) {
+inline int cell2int(Cell s) {
         return (s == black || s == sblack);
 }
-inline char square2char(Square s) {
+inline char cell2char(Cell s) {
         return char(s);
 }
-inline Square char2square(char c) {
-        Square values[4] { white, black, swhite, sblack };
+inline Cell char2cell(char c) {
+        Cell values[4] { white, black, swhite, sblack };
         for(int i = 0 ; i < 4 ; i++)
                 if(c == char(values[i]))
                         return values[i];
@@ -42,7 +42,7 @@ inline Square char2square(char c) {
 
 inline void board_set_size(Board& board, int rows, int cols) {
         board.clear();
-        board.resize(rows, vector<Square>(cols));
+        board.resize(rows, vector<Cell>(cols));
 }
 
 #endif

@@ -9,12 +9,12 @@ const unsigned int neighbourhood_size = 2*neighbourhood_radius + 1;
 
 // Structure encapsulating all the parameters of terrain generation process
 struct TerrainParams {
-        // neighbourhood contains weights for squares' neighbourhood
-        // initially board is filled randomly according to the probability of empty square
+        // neighbourhood contains weights for cells' neighbourhood
+        // initially board is filled randomly according to the probability of empty cell
 	// threshold defines the minimum value for the weighted sum (over the nighbourhood)
-        // for a square to survive or be born
+        // for a cell to survive or be born
         int neighbourhood[neighbourhood_size][neighbourhood_size];
-        float probability; //of empty square
+        float probability; //of empty cell
 	int threshold;
 };
 

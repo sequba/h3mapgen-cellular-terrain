@@ -30,7 +30,7 @@ void generate_sample(Board& result, unsigned int rows, unsigned int cols) {
 int main(int argc, char** argv) {
 	if(argc < 4) {
 		cout << "Usage: " << argv[0] << " map_height map_width p"
-		     << "\n\n" << "p - the probability of empty square"
+		     << "\n\n" << "p - the probability of empty cell"
 		     << "\n";
 		return 0;
 	}

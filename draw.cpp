@@ -12,7 +12,7 @@ struct Color {
 	unsigned short int r, g, b;
 };
 
-Color square2color(Square s) {
+Color cell2color(Cell s) {
 	if(s == white)
 		return Color(255,255,255);
 	else if(s == swhite)
@@ -94,7 +94,7 @@ void drawbmp (const Board& board, const string filename) {
 	for(int y = height - 1; y >= 0; y--) {     // BMP image format is written from bottom to top...
    		for(unsigned int x = 0; x <= width - 1; x++) {
 
-			Color c = square2color(board[y/zoom][x/zoom]);
+			Color c = cell2color(board[y/zoom][x/zoom]);
 
       			// Also, it's written in (b,g,r) format...
       			fprintf(outfile, "%c", c.b);
