@@ -6,7 +6,7 @@ using namespace std;
 
 int main(int argc, char** argv) {
 	if(argc < 2) {
-		cout << "Usage: " << argv[0] << "p - the probability of empty cell"
+		cout << "Usage: " << argv[0] << "p - the probability of a black cell"
 		     << "\n";
 		return 0;
 	}

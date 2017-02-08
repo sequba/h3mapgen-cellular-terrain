@@ -42,7 +42,7 @@ void terrain(const Board& board, Board& result, const TerrainParams& parameters,
 ```
 TerrainParams *_neighbourhood(float probability, int threshold, int self_weight=1);
 ```
-- `probability` is a probability of empty cell on the initial board before running CA
+- `probability` is a probability of a black cell on the initial board before running CA
 - `threshold` defines the minimum value for the weighted sum (over the nighbourhood) for a cell to survive or be born
 - `self_weight` specifies the degree of contribution of the current cell's state to the wighted sum
 
