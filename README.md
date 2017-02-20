@@ -43,7 +43,7 @@ void terrain(const Board& board, Board& result, const TerrainParams& parameters,
 TerrainParams *_neighbourhood(float probability, int self_weight=1, int threshold=0);
 ```
 - `probability` is a probability of a black cell on the initial board before running CA
-- `threshold` defines the minimum value for the weighted sum (over the nighbourhood) for a cell to survive or be born; leaving it to 0 will cause the terrain function to pick the best value automatically (recommended)
+- `threshold` defines the minimum value for the weighted sum (over the nighbourhood) for a cell to survive or be born; leaving it to 0 will cause the generator function to pick the best value automatically (recommended)
 - `self_weight` specifies the degree of contribution of the current cell's state to the wighted sum
 
 
@@ -68,6 +68,12 @@ Just four of them:
 
 As a bonus, you may also want to use my `ascii -> bmp` conversion for resulting maps. Then you'll need `draw.cpp` in addition.
 
+
+
+
+### The report
+
+For the thorough description of the method used, theoretical background, some interesting findings and practical tips, see the project report (the PDF file in the `report` directory).
 
 
 
