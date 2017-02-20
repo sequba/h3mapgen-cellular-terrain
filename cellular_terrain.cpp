@@ -65,7 +65,7 @@ void random_fill(const Board& board, Board& result, const TerrainParams& paramet
 				result[i][j] = white;
 }
 
-TerrainParams moore_neighbourhood(float probability, int threshold, int self_weight) {
+TerrainParams moore_neighbourhood(float probability, int self_weight, int threshold) {
         TerrainParams res;
         res.probability = probability;
         res.threshold = threshold;
@@ -85,7 +85,7 @@ TerrainParams moore_neighbourhood(float probability, int threshold, int self_wei
 	return res;
 }
 
-TerrainParams neumann_neighbourhood(float probability, int threshold, int self_weight) {
+TerrainParams neumann_neighbourhood(float probability, int self_weight, int threshold) {
         TerrainParams res;
         res.probability = probability;
         res.threshold = threshold;
@@ -105,10 +105,14 @@ TerrainParams neumann_neighbourhood(float probability, int threshold, int self_w
 	return res;
 }
 
+// threshold == 0 -> pick automatically
 void terrain(const Board& board, Board& result, const TerrainParams& parameters, unsigned int iterations) {
+	TerrainParams params = parameters;
 	Board tmp_board;
-	random_fill(board, tmp_board, parameters);
-	generation(tmp_board, result, parameters, iterations);	
+	random_fill(board, tmp_board, params);
+	if(params.threshold == 0)
+		autoset_threshold(params, tmp_board);
+	generation(tmp_board, result, params, iterations);	
 }
 
 const unsigned int auto_thresholding_limit = 1024;

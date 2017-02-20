@@ -13,7 +13,7 @@ int main(int argc, char** argv) {
 	int self_weight = atoi(argv[1]);
         int more_white = atoi(argv[2]);
 
-        TerrainParams params = moore_neighbourhood(0.5, 1, self_weight);
+        TerrainParams params = moore_neighbourhood(0.5, self_weight);
 
 	Board board1;
         load_board(board1);

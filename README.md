@@ -40,10 +40,10 @@ void terrain(const Board& board, Board& result, const TerrainParams& parameters,
 
 
 ```
-TerrainParams *_neighbourhood(float probability, int threshold, int self_weight=1);
+TerrainParams *_neighbourhood(float probability, int self_weight=1, int threshold=0);
 ```
 - `probability` is a probability of a black cell on the initial board before running CA
-- `threshold` defines the minimum value for the weighted sum (over the nighbourhood) for a cell to survive or be born
+- `threshold` defines the minimum value for the weighted sum (over the nighbourhood) for a cell to survive or be born; leaving it to 0 will cause the terrain function to pick the best value automatically (recommended)
 - `self_weight` specifies the degree of contribution of the current cell's state to the wighted sum
 
 
@@ -51,8 +51,9 @@ TerrainParams *_neighbourhood(float probability, int threshold, int self_weight=
 
 Example usage:
 ```
-terrain(my_map, terrain_map, moore_neighbourhood(0.5, 3), 2);
-terrain(my_map, terrain_map, neumann_neighbourhood(0.4, 4, 3), 4);
+terrain(my_map, terrain_map, moore_neighbourhood(0.5), 2);
+terrain(my_map, terrain_map, neumann_neighbourhood(0.4, 3), 4);
+terrain(my_map, terrain_map, moore_neighbourhood(0.4, 1, 5), 3);
 ```
 A quick glance at the code in `facade_test.cpp` would leave no doubts, I belive.
 
@@ -73,4 +74,4 @@ As a bonus, you may also want to use my `ascii -> bmp` conversion for resulting 
 
 ### Note
 
-Bash script produce.sh requires imagemagick.
+Bash scripts producing maps require imagemagick.
