@@ -33,6 +33,6 @@ void terrain(const Board& board, Board& result, const TerrainParams& parameters,
 // terrain(my_map, terrain_map, neumann_neighbourhood(0.4, 4, 3), 4);
 
 // more_white flag is kind of heuristical; try both values on your own to find out what works best for your purposes
-void autoset_threshold(TerrainParams& params, const Board& randomfilled_board, bool more_white=false);
+void autoset_threshold(TerrainParams& params, const Board& randomfilled_board, bool more_white=true);
 
 #endif
