@@ -2,7 +2,7 @@
 
 for p in `seq 1 9`
 do
-	./random 33 33 0.$p > maps/p$p.initial
+	../random 33 33 0.$p > maps/p$p.initial
 	for t in `seq 1 9`
 	do
 		for s in `seq 0 6`
@@ -11,9 +11,9 @@ do
 			cp maps/p$p.initial maps/current
 			for i in `seq 1 5` 
 			do
-				./generate $t $s < maps/current > maps/tmp
+				../generate $t $s < maps/current > maps/tmp
 				mv -f maps/tmp maps/current
-				./draw maps/s$s'p'$p't'$t'i'$i.bmp < maps/current
+				../draw maps/s$s'p'$p't'$t'i'$i.bmp < maps/current
 			done
 			convert label:"s = $s p = $p t = $t" maps/s$s'p'$p't'$t'i'{1,2,3,4,5}.bmp -append maps/s$s'p'$p't'$t.bmp 
 		done

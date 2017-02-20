@@ -4,7 +4,6 @@ random
 randomize
 pick_threshold
 facade_test
-maps/*
 
 # Compiled Object files
 *.slo

@@ -2,19 +2,19 @@
 
 for p in `seq 1 6`
 do
-	./random 33 33 0.$p > maps/p$p.initial
+	../random 33 33 0.$p > maps/p$p.initial
 	for s in `seq 1 5`
 	do
 			f='1'
-			t=`./pick_threshold $s $f < maps/p$p.initial`
+			t=`../pick_threshold $s $f < maps/p$p.initial`
 			echo $p $s
 			cp maps/p$p.initial maps/current
 			for i in `seq 1 6` 
 			do
-				./generate $t $s < maps/current > maps/tmp
+				../generate $t $s < maps/current > maps/tmp
 				mv -f maps/tmp maps/current
 			done
-			./draw maps/tmp.bmp < maps/current
+			../draw maps/tmp.bmp < maps/current
 			convert maps/tmp.bmp label:"p = 0.$p s = $s t = $t i = 6" -append maps/s$s'p'$p.bmp
 	done
 done
