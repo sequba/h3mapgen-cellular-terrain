@@ -84,7 +84,7 @@
 
 \textit{Maps are vital components of level design for many types of games (e.g. first-person shooters, real-time strategy games and flight simulators) and their careful design (manual or procedural) contributes vastly to player experience. There are several reasons [...] why procedural generation of maps is important for game development. First, having an inexhaustible source of new maps means that levels become less predictable, which contributes to the players’ curiosity and the game’s life-span. Second, [...] given that content is represented in an efficient manner and the procedural content generation (PCP) algorithm is parametrizable in the right ways, maps can be adjusted to match player needs and abilities [...]. Finally, PCG can be used as an assisting authoring tool for complementing human creativity and level design expertise existent within commercial game development.} \cite{paper}
 
-In this report, I present the result of studies on automatic terrain generation in a practical setting. I tried to build a framework around cellular automata to create a cave-like terrain shape given realistic constraints. Also, I identified a handful of useful parameters, which can be adjusted in order to control the visual style of resulting map.
+In this report, I present the results of studies on automatic terrain generation in a practical setting. I tried to build a framework around cellular automata to create a cave-like terrain shape given realistic constraints. Also, I identified a handful of useful parameters, which can be adjusted in order to control the visual style of the resulting map.
 
 %----------------------------------------------------------------------------------------
 
@@ -100,15 +100,15 @@ Additionally, we have an intention for the terrain to be highly controllable in 
 
 \section*{Task specification}
 
-The map is represented as a two-dimensional grid of cells, each of which can be in one of four feasible states: \emph{black}, \emph{white}, \emph{super-black} and \emph{super-white}. Here is the semantics of these four states:
+The map is represented as a two-dimensional grid of cells, each of which can be in one of the four feasible states: \emph{black}, \emph{white}, \emph{super-black} or \emph{super-white}. Here is the semantics of these four states:
 
 \begin{itemize}
-	\item \emph{white} and \emph{super-white} cells represents traversable terrain
-	\item \emph{black} and \emph{super-black} cells are non-traversable
-	\item cells that are \emph{super-white} and \emph{super-black} are special in a way that their state is immutable; i.e. there is a reason for these cells to be traversable or non-traversable respectively and therefore they must remain such throughout the process
+	\item \emph{white} and \emph{super-white} cells represents traversable terrain;
+	\item \emph{black} and \emph{super-black} cells are non-traversable;
+	\item cells that are \emph{super-white} and \emph{super-black} are special in a way that their state is immutable; i.e. there is a reason for these cells to be traversable or non-traversable respectively and therefore they must remain such throughout the process.
 \end{itemize}
 
-The goal of the terrain generator is to transform the map in such a way, that \emph{super} cells remain untouched and the rest is shaped as a reasonably looking strategy game map. More formally:
+The goal of the terrain generator is to transform the map in such a way that \emph{super} cells remain untouched and the rest is shaped as a reasonably looking strategy game map. More formally:
 
 \begin{itemize}
 	\item \textsc{Input:} an arbitrarily filled up grid of cells and a number of parameters, whose possible values and meaning is going to be specified during the process of algorithm design
@@ -122,17 +122,17 @@ The goal of the terrain generator is to transform the map in such a way, that \e
 	\label{fig:input}
 \end{wrapfigure}
 
-As a test case, I am going to use a 33x33 sample input map divided by \emph{super-black} borders into four 15x15 zones. In order to guarantee the connectivity between them throughout the process, middle points of the neighbouring zones are connected with \emph{super-white} line segments through the narrow gaps in the borders (see figure \ref{fig:input}). The actual inputs are about to be structured similarly except for the possibly more sophisticated shapes of zones and the connectivity schema (not every border is going to have a gap).
+As a test case, I am going to use a 33x33 sample input map divided by \emph{super-black} borders into four 15x15 zones. In order to guarantee the connectivity between them throughout the process, middle points of the neighbouring zones are connected with \emph{super-white} line segments through the narrow gaps in the borders (see Figure \ref{fig:input}). The actual inputs are about to be structured similarly except for the possibly more sophisticated shapes of zones and the connectivity schema (not every border is going to have a gap).
 
 %----------------------------------------------------------------------------------------
 
 \section*{Cellular automata}
 
-A cellular automaton is a discrete model developed in the field of artificial life. It consists of (possibly infinite) grid of cells and a fixed rule for changing their states. For each cell there is a set of other cells, defined relative to the specified one (the centre) called its neighbourhood. Typically, the rule of state transition is a mathematical function of a specific cell's current state and its neighbourhood i.e. it depends only on its arguments, it is same for every cell, deterministic and does not change over time. 
+A cellular automaton is a discrete model developed in the field of artificial life. It consists of (possibly infinite) grid of cells and a fixed rule for changing their states. For each cell there is a set of other cells, defined relative to the specified one (the centre) called its neighbourhood. Typically, the rule of state transition is a mathematical function of a specific cell's current state and its neighbourhood i.e. it depends only on its arguments, it is the same for every cell, it is deterministic and it does not change over time. 
 
-The simulation can be run from an arbitrary initial generation (each cell has some state assigned to it). Then, in each step, the new generation is created by applying the transition rule to every cell in the grid simultaneously.
+The simulation can be run for an arbitrary initial generation (each cell has some state assigned to it). Then, in each step, the new generation is created by applying the transition rule to every cell in the grid simultaneously.
 
-The two most commonly used types of neighbourhood are the von Neumann neighbourhood and the Moore neighbourhood. \textit{The former [...] consists of the four orthogonally adjacent cells. The latter includes the von Neumann neighbourhood as well as the four remaining cells surrounding the cell whose state is to be calculated.} \cite{wiki} See figures \ref{fig:moore_neighbourhood} and \ref{fig:neumann_neighbourhood}. A notable well-known example of a cellular automaton is the \emph{Conway's Game of Life} \cite{conway}, whose rule is based on the Moore neighbourhood.
+The two most commonly used types of neighbourhood are the von Neumann neighbourhood and the Moore neighbourhood. \textit{The former [...] consists of the four orthogonally adjacent cells. The latter includes the von Neumann neighbourhood as well as the four remaining cells surrounding the cell whose state is to be calculated.} \cite{wiki} See Figures \ref{fig:moore_neighbourhood} and \ref{fig:neumann_neighbourhood}. A notable well-known example of a cellular automaton is the \emph{Conway's Game of Life} \cite{conway}, whose rule is based on the Moore neighbourhood.
 
 \begin{figure}[ht]
 	\centering
@@ -151,7 +151,7 @@ The two most commonly used types of neighbourhood are the von Neumann neighbourh
 
 A special class of cellular automata is called \emph{outer totalistic cellular automata}. \textit{The state of each cell in a [outer] totalistic cellular automaton is represented by a number (usually an integer value drawn from a finite set), and the value of a cell at time t depends only on the sum of the values of the cells in its neighborhood [...] including the cell itself [...] at time t - 1.} \cite{wiki}
 
-The model I am using here is indeed an \emph{outer totalistic cellular automaton}. Cells in states \emph{white} and \emph{super-white} correspond to integer 0. \emph{Black} and \emph{super-black} are seen as 1. The rule is determined by a single number only - a survival threshold. The cell x is \emph{black} in time t if and only if the sum over its neighbourhood in time t - 1 is not less then the threshold value, otherwise it is \emph{white}. The rule applies to non-\emph{super} cells only, since \emph{super} states are immutable.
+The model I am using in this study is indeed an \emph{outer totalistic cellular automaton}. Cells in states \emph{white} and \emph{super-white} correspond to integer 0. \emph{Black} and \emph{super-black} are seen as 1. The rule is determined by a single number only - a survival threshold. The cell $x$ is \emph{black} in time $t$ if and only if the sum over its neighbourhood in time $t - 1$ is not less then the threshold value, otherwise it is \emph{white}. The rule applies to non-\emph{super} cells only, since \emph{super} states are immutable.
 
 %----------------------------------------------------------------------------------------
 
@@ -161,7 +161,7 @@ The generation algorithm works as follows:
 
 \begin{enumerate}
 	\item It reads the input map filled with \emph{black}, \emph{white}, \emph{super-black} and \emph{super-white} cells.
-	\item Then, to each non-\emph{super} cell, regardless of its current state, it assigns \emph{black} or \emph{white} at random with \textbf{p} being the probability of \emph{black} state.
+	\item Then, to each non-\emph{super} cell, regardless of its current state, it assigns \emph{black} or \emph{white} at random with \textbf{p} being the probability of a \emph{black} state.
 	\item It produces the next generation of automaton, by computing the new states for every cell \textbf{x} simultaneously, according to the following rule:
 		\begin{itemize}
 			\item If \textbf{x} is \emph{super-black} or \emph{super-white}, then its state is preserved in the next generation.
@@ -186,7 +186,7 @@ It is easy to see, that this procedure depends on a handful of parameters:
 	\item \textbf{i} - the number of generations of cellular automaton to be computed.
 \end{itemize}
 
-For the sake of completeness, the random seed used for determining the cells' states in the initial generation should be considered an additional parameter. A set of parameters defined in this manner guarantees a extremely desirable property: The same collection of parameters' values (including the random seed) provided to the algorithm will cause the same map to be regenerated for a particular input.
+For the sake of completeness, the random seed used for determining the cells' states in the initial generation should be considered an additional parameter. A set of parameters defined in this manner guarantees an extremely desirable property: the same collection of parameters' values (including the random seed) provided to the algorithm will cause the same map to be regenerated for a particular input.
 
 
 %----------------------------------------------------------------------------------------
@@ -225,11 +225,11 @@ I have generated the terrain for the sample input map with a vast variety of the
 
 In order to highlight the way the parameters affect the result, I reused the initial generations of the automaton as much as possible, since this is the only nondeterministic stage of the procedure. Specifically, for each value of parameter \textbf{p} all the generated maps are based upon the same initial state.
 
-Also, I decided to adjust the value of \textbf{t} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason is, at most two \textbf{t} values make sense given other parameters. Usually, a single one can be named that is optimal for generation. Values less than that lead to maps almost completely filled with \emph{black} cells, whereas greater values produce maps nearly wholly \emph{white}. In order to pick the right one I was generating three iterations of automaton for successive values of this parameter and selecting the least \textbf{t} producing the map for which the rate of the \emph{white} cells to \emph{black} cells was not less than 1.
+Also, I decided to adjust the value of \textbf{t} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason is that, as preliminary experiments have shown, at most two \textbf{t} values make sense given the other parameters. Usually, a single one can be named that is optimal for generation. Less values lead to maps almost completely filled with \emph{black} cells, whereas greater ones produce maps nearly entirely \emph{white}. In order to pick the right $t$ value I was generating three iterations of automaton for $t = 1,2,3...$  parameter and selecting the least \textbf{t} producing the map for which the rate of the \emph{white} cells to \emph{black} cells was not less than 1.
 
-A handful of notable examples of the maps created are presented in figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}.
+A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}.
 
-Another thing about this way of generating terrain is, that the cellular automata are extremely efficient. Computing 6 iterations on 128x128 map using the von Neumann neighbourhood takes only 0.09s on 1.86 GHz CPU. The fact is worth mentioning since it makes the method suitable for real-time generation. 
+Another thing about this way of terrain generation is that the cellular automata are extremely efficient. Computing 6 iterations on 128x128 map using the von Neumann neighbourhood takes only 0.09s on 1.86 GHz CPU. The fact is worth mentioning since it makes the method suitable for real-time generation. 
 
 %----------------------------------------------------------------------------------------
 
@@ -240,10 +240,10 @@ As the results show, the cellular automata are the fast and efficient method for
 Below, I present the observations I was able to make about each of the parameters, which should be helpful in the process of tweaking and adjusting.
 
 \begin{itemize}
-        \item \textbf{N} (the neighbourhood type) is probably the most important parameter. Picking the Moore neighbourhood results in smoothly shaped cave-like structures, which can be seen on figures \ref{fig:results1} and \ref{fig:results3}. Whereas, the von Neumann neighbourhood produces more right angles and, thus, the terrain generated resembles more of a labyrinth or a complex of peculiar buildings (See figures \ref{fig:results2} and \ref{fig:results4}). It looks like some kind of a man-made object. 
+        \item \textbf{N} (the neighbourhood type) is probably the most important parameter. Picking the Moore neighbourhood results in smoothly shaped cave-like structures, which can be seen in Figures \ref{fig:results1} and \ref{fig:results3}. Whereas, the von Neumann neighbourhood produces more right angles and thus, the terrain generated resembles more of a labyrinth or a complex of peculiar buildings (see Figures \ref{fig:results2} and \ref{fig:results4}). It looks like some kind of a man-made object. 
 	\item In fact, nearly all of the values for parameter \textbf{p} can be used successfully. The near-edge ones, can produce slightly more unexpected results, but not necessarily unwanted.
-	\item \textbf{s} affects the "frequency" of a structure. As its value increases the caves' walls become less smooth, there are more rooms unconnected to the main area and the accidental obstacles start to emerge in the middle of the open space. It is well shown in the figure \ref{fig:results3}. The von Neumann neighbourhood works better with slightly greater values of \textbf{s} than the Moore neighbourhood would prefer.
-	\item Using the large values of \textbf{i} in most cases is not necessary, since the automaton gets to the "stable" state quickly (See figures \ref{fig:results1} and \ref{fig:results2}). For my purposes \textbf{i} = 6 was the maximum, but often 2 or 3 iterations were more then enough.
+	\item \textbf{s} affects the "frequency" of a structure. As its value increases the caves' walls become less smooth, there are more rooms disconnected from the main area and the accidental obstacles start to emerge in the middle of the open space. It is well shown in Figure \ref{fig:results3}. The von Neumann neighbourhood works better with slightly greater values of \textbf{s} than the Moore neighbourhood would prefer.
+	\item Using the large values of \textbf{i} in most cases is not necessary, since the automaton gets to the "stable" state quickly (see Figures \ref{fig:results1} and \ref{fig:results2}). For this study \textbf{i} = 6 was the maximum, but often 2 or 3 iterations were enough.
         \item Parameter \textbf{t} is not really an adjustment, since given the remaining ones, its suitable value may be easily computed. Making this procedure an automatic step is highly encouraged, since it leaves one less thing to worry about in the design process.
 \end{itemize}
 
