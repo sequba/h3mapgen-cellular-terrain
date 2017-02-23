@@ -221,7 +221,7 @@ For the sake of completeness, the random seed used for determining the cells' st
 	\label{fig:results4}
 \end{figure}
 
-I have generated the terrain for the sample input map with a vast variety of the parameters' values. I used both the Moore and von Neumann neighbourhoods. The exact method as well as the parameters are thoroughly described in \emph{The algorithm} section.
+I have generated the terrain for the sample input map with a vast variety of the parameters' values. I used both the Moore and von Neumann neighbourhoods. The exact method as well as the parameters are thoroughly described in \emph{The algorithm} section. The source code is available in the Github repository.\cite{repo}
 
 In order to highlight the way the parameters affect the result, I reused the initial generations of the automaton as much as possible, since this is the only nondeterministic stage of the procedure. In particular, for each value of parameter \textbf{p} all the generated maps are based upon the same initial state.
 
@@ -255,6 +255,11 @@ Below, I present the observations I was able to make about each of the parameter
 
 \begin{thebibliography}{9}
 	
+\bibitem{repo}
+	Jakub Sękowski.
+	\emph{H3MapGen: Cellular Terrain} repository.
+	\url{https://github.com/sequba/h3mapgen-cellular-terrain}.
+
 \bibitem{h3}
 	New World Computing.
 	\emph{Heroes of Might and Magic III}.
