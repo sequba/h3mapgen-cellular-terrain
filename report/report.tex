@@ -196,43 +196,43 @@ For the sake of completeness, the random seed used for determining the cells' st
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1.\textwidth]{moore_i}
-	\caption{Six steps of evolution of the cellular automaton for the Moore neighbourhood and a number of different (\textbf{s}, \textbf{p}) pairs. (\textbf{i} = 1,2,3,4,5,6). Parameter \textbf{t} has been picked automatically.}
+	\caption{Six steps of evolution of the cellular automaton for the Moore neighbourhood and a number of different (\textbf{s}, \textbf{p}) pairs. (\textbf{i} = 1,2,3,4,5,6). Parameter \textbf{t} has been computed automatically.}
 	\label{fig:results1}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1.\textwidth]{neumann_i}
-	\caption{Six steps of evolution of the cellular automaton for the von Neumann neighbourhood and a number of different values of \textbf{p}. (\textbf{s} = 3 \textbf{i} = 1,2,3,4,5,6). Parameter \textbf{t} has been picked automatically.}
+	\caption{Six steps of evolution of the cellular automaton for the von Neumann neighbourhood and a number of different values of \textbf{p}. (\textbf{s} = 3 \textbf{i} = 1,2,3,4,5,6). Parameter \textbf{t} has been computed automatically.}
 	\label{fig:results2}
 \end{figure}
 
 \begin{figure}[ht]
 	\centering
 	\includegraphics[width=1.\textwidth]{moore_sp}
-	\caption{Comparison of results for different values of \textbf{p} and \textbf{s} for Moore neighbourhood and \textbf{i} = 3. Parameter \textbf{t} has been picked automatically.}
+	\caption{Comparison of results for different values of \textbf{p} and \textbf{s} for Moore neighbourhood and \textbf{i} = 3. Parameter \textbf{t} has been computed automatically.}
 	\label{fig:results3}
 \end{figure}
 
 \begin{figure}[ht]
         \centering
         \includegraphics[width=1.\textwidth]{neumann_sp}
-	\caption{Comparison of results for different values of \textbf{p} and \textbf{s} for von Neumann neighbourhood and \textbf{i} = 6. Parameter \textbf{t} has been picked automatically.}
+	\caption{Comparison of results for different values of \textbf{p} and \textbf{s} for von Neumann neighbourhood and \textbf{i} = 6. Parameter \textbf{t} has been computed automatically.}
 	\label{fig:results4}
 \end{figure}
 
-I have generated the terrain for the sample input map with a vast variety of the parameters' values. I used both the Moore and von Neumann neighbourhoods. The exact method as well as the parameters are thoroughly described in \emph{The algorithm} section. The source code is available in the Github repository.\cite{repo}
+I have generated the terrain for the sample input map with a vast variety of the parameters' values. I used both the Moore and von Neumann neighbourhoods. The exact method as well as the parameters are thoroughly described in \emph{The algorithm} section. The source code is available in the GitHub repository.\cite{repo}
 
 In order to highlight the way the parameters affect the result, I reused the initial generations of the automaton as much as possible, since this is the only nondeterministic stage of the procedure. In particular, for each value of parameter \textbf{p} all the generated maps are based upon the same initial state.
 
 Also, I decided to adjust the value of \textbf{t} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason is that, as preliminary experiments have shown, at most two \textbf{t} values make sense given the other parameters. Usually, a single one can be named that is optimal for generation. Less values lead to maps almost completely filled with \emph{black} cells, whereas greater ones produce maps nearly entirely \emph{white}. In order to pick the right \textbf{t} value I was generating three iterations of automaton for $\textbf{t} = 1,2,3,4...$ and selecting the least \textbf{t} producing the map for which the number of the \emph{white} cells is not less than the number of the \emph{black} cells.
 
-A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}. Also, Figure \ref{fig:voronoi} shows the terrain generated for Voronoi-distorted input map, whick looks far more realistic.
+A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}. Also, Figure \ref{fig:voronoi} shows the terrain generated for Voronoi-distorted input map, which looks far more realistic.
 
 \begin{wrapfigure}{r}{0.0pt}
 	\centering
 	\includegraphics[scale=0.5]{voronoi}
-	\caption{The terrain generated for a realistic-shape input. No \emph{super-white} cells were present so the caves' connectivity is low. For the results like this one the postprocessing is necessary to create tunnels between the rooms.}
+	\caption{The terrain generated for a realistic-shape input. No \emph{super-white} cells were present so the caves' connectivity is low. For the results like this one the further post-processing is necessary to create tunnels between the rooms.}
 	\label{fig:voronoi}
 \end{wrapfigure}
 
@@ -253,6 +253,8 @@ Below, I present the observations I was able to make about each of the parameter
 	\item Using the large values of \textbf{i} in most cases is not necessary, since the automaton gets to the "stable" state quickly (see Figures \ref{fig:results1} and \ref{fig:results2}). For this study \textbf{i} = 6 was the maximum, but often 2 or 3 iterations were sufficient.
         \item Parameter \textbf{t} is not really an adjustment, since given the remaining ones, its suitable value may be easily computed. Making this procedure an automatic step is highly recommended, since it decreases the search space substantially.
 \end{itemize}
+
+However, there is a necessary requirement that is impossible to be met through the parameters' adjustments only. All the empty space on the map (i.e. the \emph{white} and \emph{super-white} cells) should be reachable by the players, so the terrain cannot block the access to any cave. In order to achieve that, a post-processing of the resulting maps will be needed. For each room disconnected from the main open area a tunnel is to be created. The tunnel is defined to be a connection (path) to the closest \emph{white} or \emph{super-white} cell disconnected form the specified room. How exactly the tunnels are to be constructed is a design-related decision. One of the possible ways is to use the shortest connection that does not intersect with a \emph{super-black} border, which can be computed by the breadth-first search algorithm (BFS) easily.
 
 %----------------------------------------------------------------------------------------
 %	BIBLIOGRAPHY
