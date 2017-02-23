@@ -227,7 +227,14 @@ In order to highlight the way the parameters affect the result, I reused the ini
 
 Also, I decided to adjust the value of \textbf{t} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason is that, as preliminary experiments have shown, at most two \textbf{t} values make sense given the other parameters. Usually, a single one can be named that is optimal for generation. Less values lead to maps almost completely filled with \emph{black} cells, whereas greater ones produce maps nearly entirely \emph{white}. In order to pick the right \textbf{t} value I was generating three iterations of automaton for $\textbf{t} = 1,2,3,4...$ and selecting the least \textbf{t} producing the map for which the number of the \emph{white} cells is not less than the number of the \emph{black} cells.
 
-A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}.
+A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}. Also, Figure \ref{fig:voronoi} shows the terrain generated for Voronoi-distorted input map, whick looks far more realistic.
+
+\begin{wrapfigure}{r}{0.0pt}
+	\centering
+	\includegraphics[scale=0.5]{voronoi}
+	\caption{The terrain generated for a realistic-shape input. No \emph{super-white} cells were present so the caves' connectivity is low. For the results like this one the postprocessing is necessary to create tunnels between the rooms.}
+	\label{fig:voronoi}
+\end{wrapfigure}
 
 Another thing about this way of terrain generation is that the cellular automata are extremely efficient. Computing 6 iterations on 128x128 map using the von Neumann neighbourhood takes only 0.09s on 1.86 GHz CPU. The fact is worth mentioning since it makes the method suitable for real-time generation. 
 
