@@ -92,15 +92,32 @@ In this report, I present the results of studies on automatic terrain generation
 
 My work is a part of a project intended to build and maintain a comprehensive map generator for the classic turn-based strategy game Heroes of Might and Magic III \cite{h3}. The project is run by a group of students and employees of University of Wrocław (Institute of Computer Science). The main principles are fairness of the generated maps, sensible and significant logical structure and variety achieved through parameter adjustments as well as random decisions.
 
-The terrain generation is expected to be somewhere in the middle of the process of building the map. The earliest stages are going to produce a logical structure represented as a set of abstract zones and a graph of connections between them. After that, each zone is going to be mapped onto the map grid as a defined chunk of open space. In order to achieve the intended connectivity schema, corresponding to the graph, the zones are going to be surrounded by non-traversable borders except for the precisely positioned walkable cells, acting as portals between selected neighbouring zones. 
+The terrain generation is expected to be somewhere in the middle of the process of building the map, which is briefly depicted in the following paragraphs.
+
+We start from the map settings given by the user, including map size, number of players and their associated castles, resources richness, difficulty indicator, etc. Then, we translate these settings into the generator parameters used throughout the process.
+
+The earliest stage focuses on the generation of an abstract map layout, which determines the flow of the game and placement of the most important objects (towns, mines) and ensures the map fairness. The layout is represented as a graph, the nodes of which are the map's zones and edges are connections between them. Each node has a number of properties associated with it, e.g. the essential game objects that are to be placed in the corresponding zone, the amount of treasures to be found there, the level of villain guarding access to the zone, etc. The layout graph as well as all this properties is generated using a kind of the formal grammar system parameterized with the values based on the user input. 
+
+Next, each zone is mapped onto the grid as a defined chunk of open space, the shape of which is based on the distorted Voronoi diagram. In order to achieve the intended connectivity schema, corresponding to the edges in the graph, the zones are surrounded by non-traversable borders except for the precisely positioned walkable cells, acting as portals between selected neighbouring zones. 
 
 Additionally, we have an intention for the terrain to be highly controllable in order to fulfil the typical kinds of requirements in the level design process. Thus, similarly to non-traversable zones' borders, we allow for a cell to be declared as necessarily traversable. The main purpose behind this idea is to be able to set up the paths between the important game facilities, which are guaranteed to remain walkable.
+
+The map prepared in this manner is input to the terrain generator, which is the main subject of this study. After that, the map has to be filled with the rest of the content - treasures, monsters, and other game objects. This is planned to be done in a heuristic-based way i.e. expected player's level is to be computed in for each zone of the map and the game objects placed in that zone are to be selected deliberately to suit the player's needs and abilities at this point.
+
+It is worth to noticing that the model is general and it can be used for most of the strategy video games, not only Heroes of Might and Magic III.
 
 %----------------------------------------------------------------------------------------
 
 \section*{Task specification}
 
 The map is represented as a two-dimensional grid of cells, each of which can be in one of the four feasible states: \emph{black}, \emph{white}, \emph{super-black} or \emph{super-white}. Here is the semantics of these four states:
+
+\begin{wrapfigure}{r}{0.0pt}
+	\centering
+	\includegraphics[scale=1.0]{input}
+	\caption{Sample map for testing purposes. Dark blue and yellow indicates \emph{super-black} and \emph{super-white} cells respectively. \emph{White} cells are to be changed by the generator.}
+	\label{fig:input}
+\end{wrapfigure}
 
 \begin{itemize}
 	\item \emph{white} and \emph{super-white} cells represents traversable terrain;
@@ -114,13 +131,6 @@ The goal of the terrain generator is to transform the map in such a way that \em
 	\item \textsc{Input:} an arbitrarily filled up grid of cells and a number of parameters, whose possible values and meaning is going to be specified during the process of algorithm design
 	\item \textsc{Output:} the new grid that is compatible with the input on the \emph{super-white} and \emph{super-black} cells, and each of remaining ones is either \emph{white} or \emph{black}; it is supposed to respect the input parameters and simultaneously maximise the subjective aesthetic value when interpreted as a cave-like terrain
 \end{itemize}
-
-\begin{wrapfigure}{r}{0.0pt}
-	\centering
-	\includegraphics[scale=1.0]{input}
-	\caption{Sample map for testing purposes. Dark blue and yellow indicates \emph{super-black} and \emph{super-white} cells respectively. \emph{White} cells are to be changed by the generator.}
-	\label{fig:input}
-\end{wrapfigure}
 
 As a test case, I am going to use a 33x33 sample input map divided by \emph{super-black} borders into four 15x15 zones. In order to guarantee the connectivity between them throughout the process, middle points of the neighbouring zones are connected with \emph{super-white} line segments through the narrow gaps in the borders (see Figure \ref{fig:input}). The actual inputs are about to be structured similarly except for the possibly more sophisticated shapes of zones and the connectivity schema (not every border is going to have a gap).
 
@@ -175,7 +185,6 @@ The generation algorithm works as follows:
 	\item Previous step is repeated until \textbf{i} iterations is reached.
 	\item The \textbf{i}-th generation of automaton is returned as a result.
 \end{enumerate}
-
 It is easy to see, that this procedure depends on a handful of parameters:
 
 \begin{itemize}
@@ -225,16 +234,17 @@ I have generated the terrain for the sample input map with a vast variety of the
 
 In order to highlight the way the parameters affect the result, I reused the initial generations of the automaton as much as possible, since this is the only nondeterministic stage of the procedure. In particular, for each value of parameter \textbf{p} all the generated maps are based upon the same initial state.
 
-Also, I decided to adjust the value of \textbf{t} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason is that, as preliminary experiments have shown, at most two \textbf{t} values make sense given the other parameters. Usually, a single one can be named that is optimal for generation. Less values lead to maps almost completely filled with \emph{black} cells, whereas greater ones produce maps nearly entirely \emph{white}. In order to pick the right \textbf{t} value I was generating three iterations of automaton for $\textbf{t} = 1,2,3,4...$ and selecting the least \textbf{t} producing the map for which the number of the \emph{white} cells is not less than the number of the \emph{black} cells.
-
-A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}. Also, Figure \ref{fig:voronoi} shows the terrain generated for Voronoi-distorted input map, which looks far more realistic.
-
 \begin{wrapfigure}{r}{0.0pt}
 	\centering
 	\includegraphics[scale=0.5]{voronoi}
 	\caption{The terrain generated for a realistic-shape input. No \emph{super-white} cells were present so the caves' connectivity is low. For the results like this one the further post-processing is necessary to create tunnels between the rooms.}
 	\label{fig:voronoi}
 \end{wrapfigure}
+
+Also, I decided to adjust the value of \textbf{t} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason is that, as preliminary experiments have shown, at most two \textbf{t} values make sense given the other parameters. Usually, a single one can be named that is optimal for generation. Less values lead to maps almost completely filled with \emph{black} cells, whereas greater ones produce maps nearly entirely \emph{white}. In order to pick the right \textbf{t} value I was generating three iterations of automaton for $\textbf{t} = 1,2,3,4...$ and selecting the least \textbf{t} producing the map for which the number of the \emph{white} cells is not less than the number of the \emph{black} cells.
+
+A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}. Also, Figure \ref{fig:voronoi} shows the terrain generated for the input Voronoi diagram\footnote{see \emph{The context} section for details}, which looks far more realistic.
+
 
 Another thing about this way of terrain generation is that the cellular automata are extremely efficient. Computing 6 iterations on 128x128 map using the von Neumann neighbourhood takes only 0.09s on 1.86 GHz CPU. The fact is worth mentioning since it makes the method suitable for real-time generation. 
 
