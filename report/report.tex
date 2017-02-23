@@ -96,13 +96,13 @@ The terrain generation is expected to be somewhere in the middle of the process 
 
 The generator accepts a handful of map settings given by the user including map size, number of players and their associated castles, resources richness, difficulty indicator, etc. These settings are translated into the generator parameters used throughout the process.
 
-The earliest stages focuses on the generation of an abstract map layout, which determines the flow of the game as well as the placement of the most important game facilities (towns, mines) and ensures the map fairness. The layout is represented by a graph, the nodes of which are the map's zones and edges are connections between them. Each node has a number of properties associated with it, e.g. the essential game objects that are to be placed in the corresponding zone, the amount of treasures to be found there, the level of villain guarding access to the zone, etc. The layout graph and all this properties are generated using a kind of the formal grammar system parameterized with the values based on the user input. 
+The earliest stages focus on the generation of an abstract map layout, which determines the flow of the game as well as the placement of the most important game facilities (towns, mines) and ensures the map fairness. The layout is represented by a graph, the nodes of which are the map's zones and edges are connections between them. Each node has a number of properties associated with it, e.g. the essential game objects that are to be placed in the corresponding zone, the amount of treasures to be found there, the level of villain guarding access to the zone, etc. The layout graph and all this properties are generated using a kind of the formal grammar system parameterized with the values based on the user input. 
 
 Next each zone is mapped onto the grid as a defined chunk of open space, the shape of which is based on the distorted Voronoi diagram. In order to achieve the intended connectivity schema corresponding to the edges of the graph, the zones are surrounded by non-traversable borders except for the precisely positioned walkable cells, acting as portals between selected neighbouring zones. 
 
 Additionally, the terrain is intended to be highly controllable in order to fulfil the typical kinds of requirements in the level design process. Thus, similarly to non-traversable zones' borders, cells are allowed to be declared as necessarily traversable. The main purpose behind this idea is to be able to set up the paths between the important game facilities, which are guaranteed to remain walkable.
 
-The map prepared in this manner is input to the terrain generator, which is the main subject of this study. Next the map has to be filled with the rest of the content - treasures, monsters, and other game objects. This is planned to be done in a heuristic-based way i.e. expected player's level is to be computed for each zone of the map and the game objects placed in that zone are to be selected deliberately to suit the player's needs and abilities at this point.
+The map prepared in this manner is input to the terrain generator, which is the main subject of this study. After the terrain is shaped successfully, the map has to be filled with the rest of the content - treasures, monsters, and other game objects. This is planned to be done in a heuristic-based way, i.e. expected player's level is to be computed for each zone of the map and the game objects placed in that zone are to be selected deliberately to suit the player's needs and abilities at this point.
 
 It is worth noticing that the model is general and it can be used for most of the strategy video games, not only Heroes of Might and Magic III.
 
@@ -132,7 +132,7 @@ The objective of the terrain generator is to transform the map in such a way tha
 	\item \textsc{Output:} the new grid that is compatible with the input on the \emph{super-white} and \emph{super-black} cells, and each of remaining ones is either \emph{white} or \emph{black}; it is supposed to respect the input parameters and simultaneously maximise the subjective aesthetic value when interpreted as a cave-like terrain.
 \end{itemize}
 
-As a test case, a 33x33 sample input map divided by \emph{super-black} borders into four 15x15 zones has been used. In order to guarantee the connectivity between the zones throughout the process, middle points of the neighbouring zones are connected with \emph{super-white} line segments through the narrow gaps in the borders (see figure \ref{fig:input}). The actual inputs are to be structured similarly except for the possibly more sophisticated shapes of zones and the connectivity schema (not every border is going to have a gap).
+As a test case, a 33x33 sample input map divided by \emph{super-black} borders into four 15x15 zones has been used. In order to guarantee the connectivity between the zones throughout the process, middle points of the neighbouring zones are connected with \emph{super-white} line segments through the narrow gaps in the borders (see Figure \ref{fig:input}). The actual inputs are to be structured similarly except for the possibly more sophisticated shapes of zones and the connectivity schema (not every border is going to have a gap).
 
 %----------------------------------------------------------------------------------------
 
@@ -142,7 +142,7 @@ A cellular automaton is a discrete model developed in the field of artificial li
 
 The simulation can be run for an arbitrary initial generation (each cell has some state assigned to it). Then, in each step, the new generation is created by applying the transition rule to every cell in the grid simultaneously.
 
-The two most commonly used types of neighbourhood are the von Neumann neighbourhood and the Moore neighbourhood. The former consists of the four adjacent cells. The latter includes the von Neumann neighbourhood and additionally the four remaining cells surrounding the cell whose state is to be calculated. \cite{wiki} See Figures \ref{fig:moore_neighbourhood} and \ref{fig:neumann_neighbourhood}. A notable well-known example of a cellular automaton is the \emph{Conway's Game of Life} \cite{conway}, whose rule is based on the Moore neighbourhood.
+The two most commonly used types of neighbourhood are the von Neumann neighbourhood and the Moore neighbourhood. The former consists of the four adjacent cells. The latter includes the von Neumann neighbourhood and additionally the four remaining cells surrounding the cell whose state is to be calculated \cite{wiki}. See Figures \ref{fig:moore_neighbourhood} and \ref{fig:neumann_neighbourhood}. A notable well-known example of a cellular automaton is the \emph{Conway's Game of Life} \cite{conway}, whose rule is based on the Moore neighbourhood.
 
 \begin{figure}[ht]
 	\centering
@@ -229,9 +229,9 @@ For the sake of completeness, the seed for random numbers generator used for det
 	\label{fig:results4}
 \end{figure}
 
-I have generated the terrain for the sample input map with a vast variety of the parameters' values. I used both the Moore and von Neumann neighbourhoods. The exact method as well as the parameters are thoroughly described in \emph{The algorithm} section. The source code is available in the GitHub repository.\cite{repo}
+For the sample input map the cave-like terrain has been generated with a vast variety of the parameters' values. Both the Moore and the von Neumann neighbourhoods have been used. The exact method as well as the parameters have been thoroughly described in \emph{The algorithm} section above. The source code is available in the GitHub repository \cite{repo}.
 
-In order to highlight the way the parameters affect the result, I reused the initial generations of the automaton as much as possible, since this is the only nondeterministic stage of the procedure. In particular, for each value of parameter \textbf{p} all the generated maps are based upon the same initial state.
+In order to highlight the way the parameters affect the results, the initial generations of the automaton have been reused as much as possible, since this is the only nondeterministic stage of the procedure. Specifically, for each value of parameter \textbf{p} all the generated maps are based upon the same initial state.
 
 \begin{wrapfigure}{r}{0.0pt}
 	\centering
@@ -240,12 +240,11 @@ In order to highlight the way the parameters affect the result, I reused the ini
 	\label{fig:voronoi}
 \end{wrapfigure}
 
-Also, I decided to adjust the value of \textbf{t} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason is that, as preliminary experiments have shown, at most two \textbf{t} values make sense given the other parameters. Usually, a single one can be named that is optimal for generation. Less values lead to maps almost completely filled with \emph{black} cells, whereas greater ones produce maps nearly entirely \emph{white}. In order to pick the right \textbf{t} value I was generating three iterations of automaton for $\textbf{t} = 1,2,3,4...$ and selecting the least \textbf{t} producing the map for which the number of the \emph{white} cells is not less than the number of the \emph{black} cells.
+Also, the Author decided to adjust the value of \textbf{t} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason for this is that, as preliminary experiments have shown, never more than two \textbf{t} values, and usually the single one makes sense given other parameters. Values less than the optimum lead to maps almost completely filled with \emph{black} cells, whereas greater values produce maps nearly entirely \emph{white}. In order to pick the right one, three iterations of automaton have been generated for $\textbf{t} = 1,2,3,4...$ and the least \textbf{t} producing the map for which the number of the \emph{white} cells is not less than the number of the \emph{black} cells has been selected.
 
-A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}. Also, Figure \ref{fig:voronoi} shows the terrain generated for the input Voronoi diagram\footnote{see \emph{The context} section for details}, which looks far more realistic.
+A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}. Also, Figure \ref{fig:voronoi} shows the terrain generated for the input Voronoi diagram\footnote{See \emph{The context} section for details.}, which looks far more realistic.
 
-
-Another thing about this way of terrain generation is that the cellular automata are extremely efficient. Computing 6 iterations on 128x128 map using the von Neumann neighbourhood takes only 0.09s on 1.86 GHz CPU. The fact is worth mentioning since it makes the method suitable for real-time generation. 
+Another matter about this way of generating terrain is that the cellular automata are extremely efficient. Computing 6 iterations on 128x128 map using the von Neumann neighbourhood takes only 0.09s on 1.86 GHz CPU. This fact is worth mentioning since it makes the method suitable for real-time generation. 
 
 %----------------------------------------------------------------------------------------
 
@@ -253,14 +252,14 @@ Another thing about this way of terrain generation is that the cellular automata
 
 As the results show, the cellular automata are the fast and efficient method for generating cave-like terrain on a typical strategy game maps. They can be controlled easily through the convenient notion of immutable cells, which are guaranteed to remain (non)-traversable. The rest of the terrain produced fits these constraints quite naturally. However, earning the specific visual "style" of the map requires careful adjustments of the parameters.
 
-Below, I present the observations I was able to make about each of the parameters, which should be helpful in the process of tweaking and adjusting.
+Below the Author presents the observations made regarding each of the parameters, which should be helpful in the process of adjusting.
 
 \begin{itemize}
-        \item \textbf{N} (the neighbourhood type) is probably the most important parameter. Picking the Moore neighbourhood results in smoothly shaped cave-like structures, which can be seen in Figures \ref{fig:results1} and \ref{fig:results3}. Whereas, the von Neumann neighbourhood produces more right angles and thus the terrain generated resembles more of a labyrinth or a complex of peculiar buildings (see Figures \ref{fig:results2} and \ref{fig:results4}). It looks like some kind of a man-made object. 
-	\item In fact, nearly all of the values for parameter \textbf{p} can be used successfully. The near-edge ones, can produce slightly more unexpected results, but not necessarily unwanted.
-	\item \textbf{s} affects the "frequency" of a structure. As its value increases the caves' walls become less smooth, there are more rooms disconnected from the main area and the accidental obstacles start to emerge in the middle of the open space. It is well shown in Figure \ref{fig:results3}. The von Neumann neighbourhood works better with slightly greater values of \textbf{s} than the Moore neighbourhood would prefer.
-	\item Using the large values of \textbf{i} in most cases is not necessary, since the automaton gets to the "stable" state quickly (see Figures \ref{fig:results1} and \ref{fig:results2}). For this study \textbf{i} = 6 was the maximum, but often 2 or 3 iterations were sufficient.
-        \item Parameter \textbf{t} is not really an adjustment, since given the remaining ones, its suitable value may be easily computed. Making this procedure an automatic step is highly recommended, since it decreases the search space substantially.
+        \item \textbf{N} (the neighbourhood type) is probably the most important parameter. Using the Moore neighbourhood results in smoothly shaped cave-like structures as seen in Figures \ref{fig:results1} and \ref{fig:results3}, whereas the von Neumann neighbourhood produces more right angles and, thus, the terrain generated resembles rather a labyrinth or a complex of peculiar buildings (see Figures \ref{fig:results2} and \ref{fig:results4}). It looks like some kind of a man-made object. 
+	\item In fact, nearly all of the values for parameter \textbf{p} can be used successfully. The near-edge ones can produce slightly more unexpected results, but not necessarily unwanted.
+	\item \textbf{s} affects the "frequency" of a structure. As its value increases the caves' walls become less smooth, there are more rooms disconnected from the main area and the accidental obstacles start to emerge in the middle of the open space. It is well shown in Figure \ref{fig:results3}. The von Neumann neighbourhood works better with slightly greater values of \textbf{s} than the Moore neighbourhood.
+	\item Using the large values of \textbf{i} in most cases is not necessary, since the automaton gets to the "stable" state quickly (see Figures \ref{fig:results1} and \ref{fig:results2}). In this study \textbf{i} = 6 was the maximum, but often 3 or even 2 iterations were enough.
+        \item Parameter \textbf{t} is not really an adjustment since, given the remaining ones, its suitable value may be easily computed. Making this procedure an automatic step is highly recommended, since it decreases the search space substantially.
 \end{itemize}
 
 However, there is a necessary requirement that is impossible to be met through the parameters' adjustments only. All the empty space on the map (i.e. the \emph{white} and \emph{super-white} cells) should be reachable by the players, so the terrain cannot block the access to any cave. In order to achieve that, a post-processing of the resulting maps will be needed. For each room disconnected from the main open area a tunnel is to be created. The tunnel is defined to be a connection (path) to the closest \emph{white} or \emph{super-white} cell disconnected form the specified room. How exactly the tunnels are to be constructed is a design-related decision. One of the possible ways is to use the shortest connection that does not intersect with a \emph{super-black} border, which can be computed by the breadth-first search algorithm (BFS) easily.
