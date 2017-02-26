@@ -84,7 +84,7 @@
 
 As Johnson, Yannakakis and Togelius highlighted in their paper: \textit{Maps are vital components of level design for many types of games (e.g. first-person shooters, real-time strategy games and flight simulators) and their careful design (manual or procedural) contributes vastly to player experience. There are several reasons [...] why procedural generation of maps is important for game development. First, having an inexhaustible source of new maps means that levels become less predictable, which contributes to the players’ curiosity and the game’s life-span. Second, [...] given that content is represented in an efficient manner and the procedural content generation (PCP) algorithm is parametrizable in the right ways, maps can be adjusted to match player needs and abilities [...]. Finally, PCG can be used as an assisting authoring tool for complementing human creativity and level design expertise existent within commercial game development.} \cite{paper}
 
-In this report the results of studies on automatic terrain generation in a practical setting have been presented. Author has tried to build a framework around cellular automata to create a cave-like terrain shape given realistic constraints. Also, a handful of useful parameters has been identified, that can be adjusted in order to control the visual style of resulting map.
+In this report the results of studies on automatic terrain generation in a practical setting have been presented. Author has tried to build a framework around cellular automata to create a cave-like terrain shape given realistic constraints. Also, a handful of useful parameters has been identified, that can be adjusted in order to control the visual style of the resulting maps.
 
 %----------------------------------------------------------------------------------------
 
@@ -231,7 +231,7 @@ For the sake of completeness, the seed for random numbers generator used for det
 
 For the sample input map the cave-like terrain has been generated with a vast variety of the parameters' values. Both the Moore and the von Neumann neighbourhoods have been used. The exact method as well as the parameters have been thoroughly described in \emph{The algorithm} section above. The source code is available in the GitHub repository \cite{repo}.
 
-In order to highlight the way the parameters affect the results, the initial generations of the automaton have been reused as much as possible, since this is the only nondeterministic stage of the procedure. Specifically, for each value of parameter \textbf{p} all the generated maps are based upon the same initial state.
+In order to highlight the way the parameters affect the results, the initial generations of the automaton have been reused as much as possible, since this is the only nondeterministic stage of the procedure. In particular, for each value of parameter \textbf{p} all the generated maps are based upon the same initial state.
 
 \begin{wrapfigure}{r}{0.0pt}
 	\centering
@@ -240,7 +240,7 @@ In order to highlight the way the parameters affect the results, the initial gen
 	\label{fig:voronoi}
 \end{wrapfigure}
 
-Also, the Author decided to adjust the value of \textbf{T} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason for this is that, as preliminary experiments have shown, never more than two \textbf{T} values, and usually the single one makes sense given other parameters. Values less than the optimum lead to maps almost completely filled with \emph{black} cells, whereas greater values produce maps nearly entirely \emph{white}. In order to pick the right one, three iterations of automaton have been generated for $\textbf{T} = 1,2,3,4...$ and the least \textbf{T} producing the map for which the number of the \emph{white} cells is not less than the number of the \emph{black} cells has been selected.
+Also, the Author decided to adjust the value of \textbf{T} automatically to suit the selected set of \textbf{p}, \textbf{s} and \textbf{N} values. The reason for this is that, as preliminary experiments have shown, never more than two \textbf{T} values, and usually the single one makes sense given the other parameters. Values less than the optimum lead to maps almost completely filled with \emph{black} cells, whereas greater values produce maps nearly entirely \emph{white}. In order to pick the right one, three iterations of automaton have been generated for $\textbf{T} = 1,2,3,4...$ and the least \textbf{T} producing the map for which the number of the \emph{white} cells is not less than the number of the \emph{black} cells has been selected.
 
 A handful of notable examples of the maps created are presented in Figures \ref{fig:results1}, \ref{fig:results2}, \ref{fig:results3} and \ref{fig:results4}. Also, Figure \ref{fig:voronoi} shows the terrain generated for the input Voronoi diagram\footnote{See \emph{The context} section for details.}, which looks far more realistic.
 
