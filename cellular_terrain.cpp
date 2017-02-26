@@ -1,5 +1,6 @@
 #include <vector>
 #include <random>
+#include <chrono>
 #include "cellular_terrain.hpp"
 using namespace std;
 
@@ -52,7 +53,8 @@ void random_fill(const Board& board, Board& result, const TerrainParams& paramet
         unsigned int cols = board[0].size();
         board_set_size(result, rows, cols);
         
-	default_random_engine gen;
+	auto seed = chrono::system_clock::now().time_since_epoch().count();
+	default_random_engine gen(seed);
         bernoulli_distribution dist(parameters.probability);
 
 	for(unsigned int i=0 ; i < rows ; i++)
